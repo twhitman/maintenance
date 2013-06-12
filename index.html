@@ -4,20 +4,56 @@
         <title>Site is down for maintenence - [Client Name]</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <style>
-        body { text-align: center; padding: 150px; }
-        h1 { font-size: 50px; }
-        body { font: 20px Helvetica, sans-serif; color: #333; }
-        article { display: block; text-align: left; width: 650px; margin: 0 auto; }
-        a { color: #dc8100; text-decoration: none; }
-        a:hover { color: #333; text-decoration: none; }
-</style>
+            body { text-align: center; padding: 150px; }
+            h1 { font-size: 50px; }
+            body { font: 20px Helvetica, sans-serif; color: #333; }
+            article { display: block; text-align: left; width: 650px; margin: 0 auto; }
+            a { color: #dc8100; text-decoration: none; }
+            a:hover { color: #333; text-decoration: none; }
+        </style>
+        <!--[if lt IE 9]>
+            <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6/html5shiv.min.js"></script>
+        <![endif]-->
     </head>
     <body>
     <article>
-        <h1>Site is temporary unavailable.</h1>
-        <p>We are currently performing scheduled maintenance. Site will back soon.</p>
+        <h1><span class="sitename">Site</span> is temporarily unavailable.</h1>
+        <p>We are currently performing scheduled maintenance. <span class="sitename">Site</span> will be back soon.</p>
         <p>We apologize for any inconvenience.</p>
         <p>&mdash; <a href="mailto:[Client Email]">[Client Name]</a></p>
     </article>
+    <script type="text/javascript">
+        !function() {
+            var urlstr = window.location.toString().split('/')[2],
+                sitename = urlstr[0].toUpperCase() + urlstr.slice(1, urlstr.length),
+                indexOf = [].indexOf || function(prop) {
+                    for (var i = 0; i < this.length; i++) {
+                        if (this[i] === prop) return i;
+                    }
+                    return -1;
+                };
+
+            window.getElementsByClassName = function(className,context) {
+                if (context.getElementsByClassName) return context.getElementsByClassName(className);
+                var elems = document.querySelectorAll ? context.querySelectorAll("." + className) : (function() {
+                    var all = context.getElementsByTagName("*"),
+                        elements = [],
+                        i = 0;
+
+                    for (; i < all.length; i++) {
+                        if (all[i].className && (" " + all[i].className + " ").indexOf(" " + className + " ") > -1 && indexOf.call(elements,all[i]) === -1) elements.push(all[i]);
+                    }
+                    return elements;
+                })();
+                return elems;
+            };
+
+            var snSpans = getElementsByClassName('sitename', document);
+
+            for(var n = 0; n < snSpans.length; n++) {
+                snSpans[n].innerText = sitename;
+            }
+        }();
+    </script>
     </body>
 </html>
